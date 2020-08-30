@@ -94,29 +94,60 @@ body {
 </head>
 <body>
 
-<c:forEach items="${posts}" var="user">
+<%-- <c:forEach items="${posts}" var="user">
 	<h1> ${user.userName}</h1> 
 	<c:forEach items="${user.postsList}" var="post">
 		<h5>${post.description}</h5>
 	</c:forEach>
 	<h5></h5>
+</c:forEach> --%>
+<div class="container">
+	<div class="row p-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<fieldset style="margin: 0 auto; text-align: center;">
+			<span class="badge badge-danger" style="padding: 15px;">HOME PAGE</span> 
+			<a href="/user" class="badge badge-primary" style="padding: 15px;">USER PAGE</a>
+			<a href="/admin" class="badge badge-primary" style="padding: 15px;">ADMIN PAGE</a>
+			<a href="#myModal" class="badge badge-primary" data-toggle="modal" style="padding: 15px;">SIGN IN</a>
+		</fieldset>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>
+
+
+<div class="container">
+<c:forEach items="${posts}" var="user">
+	<c:forEach items="${user.postsList}" var="post">
+	<div class="row mb-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+		<div class="card" style="width: 30rem;">
+		  <i class="fa fa-twitter" style="font-size: 5rem; text-align: center"></i>
+		  <div class="card-body">
+		    <h5 class="card-title">${user.userName}</h5>
+		    <p class="card-text">${post.description}</p>
+		    <div style="text-align: center;">
+		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">1</i></a>
+			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">3</i></a>
+			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">3</i></a>
+		    </div>
+		  </div>
+		</div>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+	</c:forEach>
 </c:forEach>
+</div>
 
 
 
-
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<h1 style="color: blue">Welcome <span class="badge badge-danger">HOME PAGE</span> 
-			<a href="#myModal" class="trigger-btn badge badge-warning" data-toggle="modal">LOGIN</a>
-		</fieldset>
 		
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<a href="/user" class="trigger-btn badge badge-warning">USER</a>
-			<a href="/admin" class="badge badge-primary">ADMIN</a>
-		</fieldset>
 		
 
-<!-- Modal HTML -->
+<!--LOGIN Modal HTML -->
 <div id="myModal" class="modal fade">
 	<div class="modal-dialog modal-login">
 		<div class="modal-content">
@@ -140,10 +171,47 @@ body {
 				</form>
 			</div>
 			<div class="modal-footer">
-				<a href="#">Forgot Password?</a>
+			<a href="#myModal2" class="badge badge-primary" data-toggle="modal" style="padding: 15px;" onClick="closeDialog()">Not a member?</a>
 			</div>
 		</div>
 	</div>
-</div>     
+</div>
+
+<!--SIGN IN Modal HTML -->
+<div id="myModal2" class="modal fade">
+	<div class="modal-dialog modal-login">
+		<div class="modal-content">
+			<div class="modal-header">				
+				<h4 class="modal-title">Member Login</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="/user/add" method="post">
+					<div class="form-group">
+						<i class="fa fa-user"></i>
+						<input type="text" class="form-control" placeholder="Username" name="userName">
+					</div>
+					<div class="form-group">
+						<i class="fa fa-lock"></i>
+						<input type="password" class="form-control" placeholder="Password" name="password">					
+					</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary btn-block btn-lg" value="SUBMIT">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+var x = document.getElementById("myModal"); 
+function closeDialog() { 
+	x.style.display = "none";
+} 
+</script>
+
+
+     
 </body>
 </html>

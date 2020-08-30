@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page isELIgnored="false" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,47 +92,45 @@ body {
 </head>
 <body>
 
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<legend><span>Spring Web Security</span></legend><hr/>
-			<h1 style="color: blue">Welcome <span class="badge badge-danger">USER PANEL</span> 
+<div class="container">
+	<div class="row p-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<fieldset style="margin: 0 auto; text-align: center;">
+			<a href="/" class=" badge badge-primary" style="padding: 15px;">HOME</a>
+			<a href="/user" class=" badge badge-primary" style="padding: 15px;">USER</a>
+			<a href="/admin" class="badge badge-primary" style="padding: 15px;">ADMIN</a>
+			<a href="/logout" class="badge badge-primary" style="padding: 15px;">LOGOUT</a>
 		</fieldset>
-		
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<a href="/" class="trigger-btn badge badge-warning">HOME</a>
-			<a href="/user" class="trigger-btn badge badge-warning">USER</a>
-			<a href="/admin" class="badge badge-primary">ADMIN</a>
-			<a href="/logout" class="badge badge-dark">LOGOUT</a>
-		</fieldset>
-		
-
-<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-login">
-		<div class="modal-content">
-			<div class="modal-header">				
-				<h4 class="modal-title">Member Login</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">
-				<form action="/login" method="post">
-					<div class="form-group">
-						<i class="fa fa-user"></i>
-						<input type="text" class="form-control" placeholder="Username" required="required" name="username">
-					</div>
-					<div class="form-group">
-						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" required="required" name="password">					
-					</div>
-					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a href="#">Forgot Password?</a>
-			</div>
 		</div>
+		<div class="col-md-3"></div>
 	</div>
-</div>     
+</div>
+		
+		<div class="container">
+<c:forEach items="${posts}" var="user">
+	<c:forEach items="${user.postsList}" var="post">
+	<div class="row mb-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+		<div class="card" style="width: 30rem;">
+		  <i class="fa fa-twitter" style="font-size: 5rem; text-align: center"></i>
+		  <div class="card-body">
+		    <h5 class="card-title">${user.userName}</h5>
+		    <p class="card-text">${post.description}</p>
+		    <div style="text-align: center;">
+		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">1</i></a>
+			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">3</i></a>
+			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">3</i></a>
+		    </div>
+		  </div>
+		</div>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+	</c:forEach>
+</c:forEach>
+</div>
+		    
 </body>
 </html>

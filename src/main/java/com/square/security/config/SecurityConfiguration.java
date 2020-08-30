@@ -1,6 +1,5 @@
 package com.square.security.config;
 
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,12 +41,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/user").hasAnyRole("ADMIN", "USER")
 			.antMatchers("/").permitAll()
+			.antMatchers("/user/add").permitAll()
 			.antMatchers(com.square.security.config.SecurityConstraint.H2_CONSOLE).permitAll()
 			.anyRequest().authenticated()
         .and()
 	        .formLogin()
 	        .loginPage("/login")
-	        .defaultSuccessUrl("/index")
+	        .defaultSuccessUrl("/user")
 	        .permitAll()
         .and()
 	        .logout()
@@ -61,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	        .csrf()
 	        .disable();
 		
-		http.headers().frameOptions().disable();
+		//http.headers().frameOptions().disable();
 	}
 	
 	@Bean

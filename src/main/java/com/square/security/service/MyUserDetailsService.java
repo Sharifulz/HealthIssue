@@ -15,6 +15,7 @@ import com.square.dao.IUsersDao;
  *  from org.springframework.security.core.userdetails.UserDetails
  */
 import com.square.model.UsersModel;
+import com.square.service.common.IEncoderDecoder;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
@@ -22,9 +23,15 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	IUsersDao userRepo;
 	
+	@Autowired
+	IEncoderDecoder encoderDecoder;
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UsersModel> user = userRepo.findByUserName(username);
+		String password = encoderDecoder.decodeString(user.get().getPassword(), "sqr");
+		System.out.println("Password is : ---------------------- > "+ password);
+		user.get().setPassword(password);
 		user.orElseThrow(()->new UsernameNotFoundException("Not Found : "+ username));
 		return user.map(MyUserDetails::new).get();
 	}

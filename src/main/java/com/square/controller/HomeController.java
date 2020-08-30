@@ -38,8 +38,16 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public String login() {
-		return "index";
+	public ModelAndView login() {
+		List<UsersModel> list = userDao.findAll();
+		ModelAndView mv  = new ModelAndView();
+		
+		List<BlogPostModel> postsList = list.get(0).getPostsList();
+		System.out.println("Description: Path: /login, post found -------------------------- " + postsList.size()+" User Found: "+list.size());
+		System.out.println("Login User: "+ list.get(0).getUserName());
+		mv.setViewName("index");
+		mv.addObject("posts", list);
+		return mv;
 	}
 	
 	@GetMapping("/noaccess")

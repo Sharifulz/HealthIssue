@@ -91,8 +91,8 @@ body {
 <body>
 
 		<fieldset style="margin: 0 auto; text-align: center;">
-			<h1 style="color: blue">Welcome <span class="badge badge-danger">HOME PAGE</span> 
-			<a href="/" class="trigger-btn badge badge-warning">HOME</a>
+			<h1 style="color: blue">Welcome </h1><span class="badge badge-danger">HOME PAGE</span> 
+			<a href="/user" class="trigger-btn badge badge-warning">HOME</a>
 			<h1>NO ACCESS</h1>	
 	</fieldset>
 		

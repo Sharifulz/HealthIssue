@@ -8,7 +8,7 @@ import java.util.Base64;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EncoderDecoder implements IEncoderDecoder{
+public class CommonService implements ICommonService {
 
 	@Override
 	public String encodeString(String actualString, String salt) {
@@ -50,4 +50,3 @@ public class EncoderDecoder implements IEncoderDecoder{
 	}
 
 }
-

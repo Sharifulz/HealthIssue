@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page isELIgnored="false" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,47 +93,97 @@ body {
 </head>
 <body>
 
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<legend><span>Spring Web Security</span></legend><hr/>
-			<h1 style="color: blue">Welcome <span class="badge badge-danger">ADMIN PANEL</span> </h1>
+<div class="container">
+	<div class="row p-2">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<fieldset style="margin: 0 auto; text-align: center;">
+			<span class="badge badge-danger" style="padding: 15px;">ADMIN PAGE</span> 
+			<a href="/" class=" badge badge-warning" style="padding: 15px;">HOME</a>
+			<a href="/user" class=" badge badge-warning" style="padding: 15px;">USER</a>
+			<a href="/admin" class="badge badge-primary" style="padding: 15px;">ADMIN</a>
+			<a href="/logout" class="badge badge-dark" style="padding: 15px;">LOGOUT</a>
 		</fieldset>
-		
-		<fieldset style="margin: 0 auto; text-align: center;">
-			<a href="/" class="trigger-btn badge badge-warning">HOME</a>
-			<a href="/user" class="trigger-btn badge badge-warning">USER</a>
-			<a href="/admin" class="badge badge-primary">ADMIN</a>
-			<a href="/logout" class="badge badge-dark">LOGOUT</a>
-		</fieldset>
-		
-
-<!-- Modal HTML -->
-<div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-login">
-		<div class="modal-content">
-			<div class="modal-header">				
-				<h4 class="modal-title">Member Login</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">
-				<form action="/login" method="post">
-					<div class="form-group">
-						<i class="fa fa-user"></i>
-						<input type="text" class="form-control" placeholder="Username" required="required" name="username">
-					</div>
-					<div class="form-group">
-						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" required="required" name="password">					
-					</div>
-					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a href="#">Forgot Password?</a>
-			</div>
 		</div>
+		<div class="col-md-3"></div>
 	</div>
-</div>     
+</div>
+<h3 style="color:blue;">Privilege 1 : Pending User</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Request Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      <c:forEach items="${pendingUsers}" var="pendingUser">
+               <tr>
+                <th scope="row">${pendingUser.userName}</th>
+                <td>${pendingUser.fullName}</td>
+                <td>${pendingUser.signupDate}</td>
+                <td>Activate</td>
+              </tr>
+      </c:forEach>
+  </tbody>
+</table>
+
+
+<h3 style="color:blue;">Privilege 2 : Pending Posts</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Post Description</th>
+      <th scope="col">Post Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>    
+      <c:forEach items="${pendingBlogs}" var="pendingBlog">
+               <tr>
+                <th scope="row">${pendingBlog.userName}</th>
+                <td>${pendingBlog.description}</td>
+                <td>${pendingBlog.postDate}</td>
+                <td>Approve</td>
+              </tr>
+      </c:forEach>
+  </tbody>
+</table>
+
+<h3 style="color:blue;">Privilege 3 : Approved Posts</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Post Description</th>
+      <th scope="col">Post Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>    
+      <c:forEach items="${approvedPosts}" var="approvedPost">
+               <tr>
+                <th scope="row">${approvedPost.userName}</th>
+                <td>${approvedPost.description}</td>
+                <td>${approvedPost.postDate}</td>
+                <td>Delete</td>
+              </tr>
+      </c:forEach>
+  </tbody>
+</table>
+
+<h3 style="color:blue;">Privilege 4 : Create Admin</h3>
+
+<form action="/admin/create" method="post">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Username</label>
+    <input type="text" class="form-control" placeholder="Username" name="userName">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+    
 </body>
 </html>

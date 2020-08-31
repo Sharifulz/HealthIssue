@@ -1,15 +1,12 @@
 package com.square.model;
 
-import java.util.List;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,21 +19,23 @@ public class UsersModel{
 	private int id;	
 
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	private String userName;	
 
+	@Column(name = "full_name")
+	private String fullName;	
+
+	@Column(name = "signup_date")
+	private Date signupDate;
+	
 	@Column(name = "password")
 	private String password;
-
+	
 	@Column(name = "active")
 	private boolean active;	
 
 	@Column(name = "roles")
 	private String roles;
-
-	 @OneToMany
-	 @JoinColumn(name = "user_id",insertable=false,  updatable=false, nullable = false, foreignKey = @ForeignKey(name = "Details_FK"))
-	 List<BlogPostModel> postsList;	
 
 	public int getId() {
 		return id;
@@ -86,15 +85,27 @@ public class UsersModel{
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	 
+	
 
-     
-	public List<BlogPostModel> getPostsList() {
-		return postsList;
+
+	public String getFullName() {
+		return fullName;
 	}
 
 
-	public void setPostsList(List<BlogPostModel> postsList) {
-		this.postsList = postsList;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+
+	public Date getSignupDate() {
+		return signupDate;
+	}
+
+
+	public void setSignupDate(Date signupDate) {
+		this.signupDate = signupDate;
 	}
 
 

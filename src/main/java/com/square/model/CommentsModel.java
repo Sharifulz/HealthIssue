@@ -22,11 +22,12 @@ public class CommentsModel {
 
 	@Column(name = "comments")
 	private String comments;
-	
+
 	//-------- This id is mapped with id in blog_post table
 	@Column(name = "post_id")
 	private int postId;
 
+		
 	public int getId() {
 		return id;
 	}
@@ -51,6 +52,7 @@ public class CommentsModel {
 		this.comments = comments;
 	}
 
+	
 	public int getPostId() {
 		return postId;
 	}

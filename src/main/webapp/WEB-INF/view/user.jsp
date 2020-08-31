@@ -106,8 +106,38 @@ body {
 		<div class="col-md-3"></div>
 	</div>
 </div>
-		
-		<div class="container">
+<!-- ==================================================== -->
+<%-- <div class="container">
+<div class="row mb-1">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+		<div class="card">
+		  <div class="card-body">
+		    <h5 class="card-title">User: ${ loginUser.userName}</h5>
+		    <h5 class="card-title">Approved Post: ${ loginUser.userName}</h5>
+		    <h5 class="card-title">Pending post: ${ loginUser.userName}</h5>
+		    <a href="#" class="badge badge-primary" style="padding: 15px;">NEW POST</a>
+		  </div>
+		</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	</div> --%>
+	
+	
+<%-- <c:forEach items="${posts}" var="user">
+	<c:forEach items="${user.postsList}" var="post">
+	<h1>Username: ${user.userName}</h1>
+	<h3>Post: ${post.description}</h3>
+		<c:forEach items="${post.commentsList}" var="comments">
+			<h5>Comments: ${comments.comments}</h5>
+		</c:forEach>
+	</c:forEach>
+</c:forEach> --%>
+
+<!-- ==================================================== -->
+	
+<%-- <div class="container">
 <c:forEach items="${posts}" var="user">
 	<c:forEach items="${user.postsList}" var="post">
 	<div class="row mb-2">
@@ -116,13 +146,25 @@ body {
 		<div class="card" style="width: 30rem;">
 		  <i class="fa fa-twitter" style="font-size: 5rem; text-align: center"></i>
 		  <div class="card-body">
-		    <h5 class="card-title">${user.userName}</h5>
+		    <span class="card-title">User: ${user.userName}</span>
+		    <c:if test="${user.userName eq loginUser.userName}">  
+			   <span><a href="#" class="btn btn-danger ml-5">Delete</a></span>  
+			</c:if>  
 		    <p class="card-text">${post.description}</p>
-		    <div style="text-align: center;">
-		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">1</i></a>
-			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">3</i></a>
-			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">3</i></a>
+		    <c:forEach items="${post.commentsList}" var="comments">
+				<p>Comments: ${comments.comments}</p>
+			</c:forEach>
+		    <div style="text-align: center; margin-bottom: 10px;">
+		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">${post.likes}</i></a>
+			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">${post.dislikes}</i></a>
+			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">${post.comments}</i></a>
 		    </div>
+		    <form>
+			  <div class="form-group">
+			    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your comment">
+			  </div>
+			  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+			</form>
 		  </div>
 		</div>
 		</div>
@@ -130,7 +172,7 @@ body {
 	</div>
 	</c:forEach>
 </c:forEach>
-</div>
-		    
+</div> --%>
+
 </body>
 </html>

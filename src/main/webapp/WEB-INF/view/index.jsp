@@ -117,21 +117,34 @@ body {
 </div>
 
 
+<%-- <div class="container">
+<c:forEach var="posts" items="${data}">
+   <h1>Post Is ${posts.description}</h1>
+   
+   <c:forEach var="comments" items="${posts.commentsList}">
+   		<h3>Comments Is ${comments.comments}</h3>
+   </c:forEach>
+   <br/>
+</c:forEach>
+</div> --%>
+
 <div class="container">
-<c:forEach items="${posts}" var="user">
-	<c:forEach items="${user.postsList}" var="post">
+	<c:forEach items="${data}" var="post">
 	<div class="row mb-2">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 		<div class="card" style="width: 30rem;">
 		  <i class="fa fa-twitter" style="font-size: 5rem; text-align: center"></i>
 		  <div class="card-body">
-		    <h5 class="card-title">${user.userName}</h5>
-		    <p class="card-text">${post.description}</p>
-		    <div style="text-align: center;">
-		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">1</i></a>
-			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">3</i></a>
-			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">3</i></a>
+		    <span class="card-title" style="font-weight: bold;">User: ${post.userName}</span>
+		    <p class="card-text" style="font-size: 25px;">Post: ${post.description}</p>
+		    <c:forEach items="${post.commentsList}" var="comments">
+				<p>Comments: ${comments.comments}</p>
+			</c:forEach>
+		    <div style="text-align: center; margin-bottom: 10px;">
+		    	 <a href="#" class="btn btn-success"><i class="fa fa-thumbs-up" style="text-align: center">${post.likes}</i></a>
+			    <a href="#" class="btn btn-danger"><i class="fa fa-thumbs-down" style="text-align: center">${post.dislikes}</i></a>
+			    <a href="#" class="btn btn-warning"><i class="fa fa-comment" style="text-align: center">${post.comments}</i></a>
 		    </div>
 		  </div>
 		</div>
@@ -139,7 +152,6 @@ body {
 		<div class="col-md-3"></div>
 	</div>
 	</c:forEach>
-</c:forEach>
 </div>
 
 
@@ -166,12 +178,12 @@ body {
 						<input type="password" class="form-control" placeholder="Password" required="required" name="password">					
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+						<input type="submit" class="btn badge-primary btn-block btn-lg" value="Login">
 					</div>
 				</form>
 			</div>
 			<div class="modal-footer">
-			<a href="#myModal2" class="badge badge-primary" data-toggle="modal" style="padding: 15px;" onClick="closeDialog()">Not a member?</a>
+			<a href="#myModal2" data-toggle="modal" style="padding: 15px;" onClick="closeDialog()">Not a member?</a>
 			</div>
 		</div>
 	</div>
@@ -182,7 +194,7 @@ body {
 	<div class="modal-dialog modal-login">
 		<div class="modal-content">
 			<div class="modal-header">				
-				<h4 class="modal-title">Member Login</h4>
+				<h4 class="modal-title">Register</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
@@ -196,7 +208,7 @@ body {
 						<input type="password" class="form-control" placeholder="Password" name="password">					
 					</div>
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary btn-block btn-lg" value="SUBMIT">
+						<input type="submit" class="btn badge-primary btn-block btn-lg" value="SUBMIT">
 					</div>
 				</form>
 			</div>

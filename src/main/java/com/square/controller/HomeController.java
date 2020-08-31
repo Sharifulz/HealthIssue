@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.square.dao.IBlogPostDao;
 import com.square.dao.IUsersDao;
 import com.square.model.BlogPostModel;
 import com.square.model.UsersModel;
@@ -18,17 +19,17 @@ public class HomeController {
 	@Autowired
 	IUsersDao userDao;
 	
+	@Autowired
+	IBlogPostDao blogPostDao;
+	
 	@GetMapping("/")
 	public ModelAndView home() {
 		
-		List<UsersModel> list = userDao.findAll();
 		ModelAndView mv  = new ModelAndView();
-		
-		List<BlogPostModel> postsList = list.get(0).getPostsList();
-		System.out.println(postsList.size());
-		System.out.println(list.get(0).getUserName());
+		List<BlogPostModel> postsList = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
+		System.out.println("ROOT :---------------> Approved Post Size "+ postsList.size());
 		mv.setViewName("index");
-		mv.addObject("posts", list);
+		mv.addObject("data", postsList);
 		return mv;
 	}
 	
@@ -39,14 +40,11 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public ModelAndView login() {
-		List<UsersModel> list = userDao.findAll();
 		ModelAndView mv  = new ModelAndView();
+		List<BlogPostModel> postsList = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
 		
-		List<BlogPostModel> postsList = list.get(0).getPostsList();
-		System.out.println("Description: Path: /login, post found -------------------------- " + postsList.size()+" User Found: "+list.size());
-		System.out.println("Login User: "+ list.get(0).getUserName());
 		mv.setViewName("index");
-		mv.addObject("posts", list);
+		mv.addObject("data", postsList);
 		return mv;
 	}
 	

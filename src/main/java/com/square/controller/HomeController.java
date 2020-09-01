@@ -1,6 +1,7 @@
 package com.square.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.square.dao.IBlogPostDao;
 import com.square.dao.IUsersDao;
 import com.square.model.BlogPostModel;
-import com.square.model.UsersModel;
 
 @Controller
 public class HomeController {
@@ -26,10 +26,10 @@ public class HomeController {
 	public ModelAndView home() {
 		
 		ModelAndView mv  = new ModelAndView();
-		List<BlogPostModel> postsList = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
-		System.out.println("ROOT :---------------> Approved Post Size "+ postsList.size());
+		List<BlogPostModel> approvedPosts = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
+		
 		mv.setViewName("index");
-		mv.addObject("data", postsList);
+		mv.addObject("approvedPosts", approvedPosts);
 		return mv;
 	}
 	
@@ -41,10 +41,13 @@ public class HomeController {
 	@GetMapping("/login")
 	public ModelAndView login() {
 		ModelAndView mv  = new ModelAndView();
-		List<BlogPostModel> postsList = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
+		List<String> warningMessage = new ArrayList<>();
+		List<BlogPostModel> approvedPosts = blogPostDao.findByIsApprovedTrueOrderByPostDateDesc();
+		warningMessage.add("Please login first to continue...");
 		
 		mv.setViewName("index");
-		mv.addObject("data", postsList);
+		mv.addObject("approvedPosts", approvedPosts);
+		mv.addObject("warningMessage", warningMessage);
 		return mv;
 	}
 	

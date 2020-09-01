@@ -12,4 +12,9 @@ public interface IUserService {
 	
 	public Map<String, Object> getAllDataForAdmin(); 
 	
+	public Map<String, Object> changeActivationStatus(Boolean activeStatus, int id); 
+	
+	public Map<String, Object> deleteUser(int id); 
+	
+	
 }

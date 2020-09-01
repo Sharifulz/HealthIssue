@@ -106,49 +106,45 @@ body {
 		<div class="col-md-3"></div>
 	</div>
 </div>
-<!-- ==================================================== -->
-<%-- <div class="container">
-<div class="row mb-1">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-		<div class="card">
-		  <div class="card-body">
-		    <h5 class="card-title">User: ${ loginUser.userName}</h5>
-		    <h5 class="card-title">Approved Post: ${ loginUser.userName}</h5>
-		    <h5 class="card-title">Pending post: ${ loginUser.userName}</h5>
-		    <a href="#" class="badge badge-primary" style="padding: 15px;">NEW POST</a>
-		  </div>
-		</div>
-		</div>
-		<div class="col-md-2"></div>
-	</div>
-	</div> --%>
-	
-	
-<%-- <c:forEach items="${posts}" var="user">
-	<c:forEach items="${user.postsList}" var="post">
-	<h1>Username: ${user.userName}</h1>
-	<h3>Post: ${post.description}</h3>
-		<c:forEach items="${post.commentsList}" var="comments">
-			<h5>Comments: ${comments.comments}</h5>
-		</c:forEach>
-	</c:forEach>
-</c:forEach> --%>
 
+<c:forEach items="${messages}" var="message">
+	<div class="alert alert-primary" role="alert">
+  		Dear ${currentUser.fullName} , ${message}
+	</div>
+</c:forEach>
+
+<c:forEach items="${errorMessage}" var="error">
+	<div class="alert alert-danger" role="alert">
+  		 ${error}
+	</div>
+</c:forEach>
+
+<c:forEach items="${warningMessage}" var="warning">
+	<div class="alert alert-warning" role="alert">
+  		 ${warning}
+	</div>
+</c:forEach>
 <!-- ==================================================== -->
-	
-<%-- <div class="container">
-<c:forEach items="${posts}" var="user">
-	<c:forEach items="${user.postsList}" var="post">
+	<form action="/blog/create_by_user" method="post">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Status</label>
+    <input type="text" class="form-control" placeholder="Username" name="description">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="container">
+<c:forEach items="${approvedPosts}" var="approvedPost">
 	<div class="row mb-2">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
 		<div class="card" style="width: 30rem;">
 		  <i class="fa fa-twitter" style="font-size: 5rem; text-align: center"></i>
 		  <div class="card-body">
-		    <span class="card-title">User: ${user.userName}</span>
-		    <c:if test="${user.userName eq loginUser.userName}">  
-			   <span><a href="#" class="btn btn-danger ml-5">Delete</a></span>  
+		    <span class="card-title">User: ${approvedPost.userName}</span>
+		    <h2>${approvedPost.description}</h2>
+		    <c:if test="${approvedPost.userName eq currentUser.userName}">  
+			   <span><a href="/blog/remove_by_user/${approvedPost.id}" class="btn btn-danger ml-5">Delete</a></span>  
 			</c:if>  
 		    <p class="card-text">${post.description}</p>
 		    <c:forEach items="${post.commentsList}" var="comments">
@@ -171,8 +167,7 @@ body {
 		<div class="col-md-3"></div>
 	</div>
 	</c:forEach>
-</c:forEach>
-</div> --%>
+</div> 
 
 </body>
 </html>

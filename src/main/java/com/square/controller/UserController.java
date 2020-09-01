@@ -3,11 +3,14 @@ package com.square.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,40 +34,95 @@ public class UserController {
 		String userName = CurrentUser.getCurrentUser();
 		Map<String, Object> data = userService.getCurrentUserDetails(userName);
 		
-		//List<BlogPostModel> postsList = list.get(0).getPostsList();
-		
-		//Optional<UsersModel> optionalUser = userDao.findByUserName(username);
-		//UsersModel user = optionalUser.get();
-		
-		//List<CommentsModel> commentsList = postsList.get(0).getCommentsList();
-		//System.out.println("Comments list found size: ------------- "+ commentsList.size());
-		
-		//System.out.println(postsList.size());
-		//System.out.println(list.get(0).getUserName());
 		mv.setViewName("user");
-		mv.addObject("data", data);
-		//mv.addObject("posts", list);
+		mv.addObject("currentUser",  data.get("currentUser"));
+		mv.addObject("approvedPosts", data.get("approvedPosts"));
 		return mv;
 	}
 	
 	@PostMapping("/user/add")
 	public ModelAndView addUser(@ModelAttribute("user") UsersModel user) {
 		
+		ModelAndView mv  = new ModelAndView();
 		Map<String, Object> data = new HashMap<>();
 		
 		data = userService.saveUser(user);
-		
-		ModelAndView mv  = new ModelAndView();
 		mv.setViewName("index");
-		mv.addObject("user", user);
+		mv.addObject("currentUser",  data.get("currentUser"));
+		mv.addObject("approvedPosts", data.get("approvedPosts"));
+		mv.addObject("messages", data.get("message"));
+		mv.addObject("errorMessage", data.get("errorMessage"));
+		
 		return mv;
 	}
 	
-	@GetMapping("/user/delete")
-	public ModelAndView deleteUser() {
-		System.out.println("DELETE USER CONTOLLER -----------------------------------------> ");
-		ModelAndView mv  = new ModelAndView();
+	@GetMapping("/user/approve/{id}")
+	public ModelAndView userApprove(@PathVariable int id) {
+				
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> data = new HashMap<>();
+		
+		data = userService.changeActivationStatus(true, id);
+		
+		if (data.get("result").equals("successful")) {
+			data = userService.getAllDataForAdmin();
+		}else {
+			data = userService.getAllDataForAdmin();
+		}
+		
 		mv.setViewName("admin");
+		mv.addObject("pendingUsers", data.get("pendingUsers"));
+		mv.addObject("approvedUsers", data.get("approvedUsers"));
+		mv.addObject("pendingBlogs", data.get("pendingBlogs"));
+		mv.addObject("approvedPosts", data.get("approvedPosts"));
+		
+		return mv;
+	}
+	
+	@GetMapping("/user/block/{id}")
+	public ModelAndView userBlock(@PathVariable int id) {
+				
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> data = new HashMap<>();
+		
+		data = userService.changeActivationStatus(false, id);
+		
+		if (data.get("result").equals("successful")) {
+			data = userService.getAllDataForAdmin();
+		}else {
+			data = userService.getAllDataForAdmin();
+		}
+		
+		mv.setViewName("admin");
+		mv.addObject("pendingUsers", data.get("pendingUsers"));
+		mv.addObject("approvedUsers", data.get("approvedUsers"));
+		mv.addObject("pendingBlogs", data.get("pendingBlogs"));
+		mv.addObject("approvedPosts", data.get("approvedPosts"));
+		
+		return mv;
+	}
+	
+	
+	@GetMapping("/user/delete/{id}")
+	public ModelAndView userDelete(@PathVariable int id) {
+				
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> data = new HashMap<>();
+		
+		data = userService.deleteUser(id);
+		
+		if (data.get("result").equals("successful")) {
+			data = userService.getAllDataForAdmin();
+		}else {
+			data = userService.getAllDataForAdmin();
+		}
+		
+		mv.setViewName("admin");
+		mv.addObject("pendingUsers", data.get("pendingUsers"));
+		mv.addObject("approvedUsers", data.get("approvedUsers"));
+		mv.addObject("pendingBlogs", data.get("pendingBlogs"));
+		mv.addObject("approvedPosts", data.get("approvedPosts"));
+		
 		return mv;
 	}
 	

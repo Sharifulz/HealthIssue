@@ -38,8 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/admin", "/user/delete").hasRole("ADMIN")
-			.antMatchers("/user").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/admin", "/user/delete/{id}", "/user/approve/{id}","/user/block/{id}", "/blog/approve/{id}"
+					,"/blog/remove/{id}", "/blog/create_by_admin").hasRole("ADMIN")
+			.antMatchers("/user", "/blog/create_by_user").hasAnyRole("ADMIN", "USER")
+			.antMatchers("/blog/remove_by_user/{id}").hasAnyRole("USER")
 			.antMatchers("/").permitAll()
 			.antMatchers("/user/add").permitAll()
 			.antMatchers(com.square.security.config.SecurityConstraint.H2_CONSOLE).permitAll()
@@ -61,7 +63,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	        .csrf()
 	        .disable();
 		
-		//http.headers().frameOptions().disable();
 	}
 	
 	@Bean

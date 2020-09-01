@@ -23,7 +23,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
     public void run(String...args) throws Exception {
     	UsersModel admin = createDefaultAdmin();
     	System.out.println("Admin username ----------------> "+ admin.getUserName());
-    	System.out.println("Admin password ----------------> "+ admin.getPassword());
+    	System.out.println("Admin password [Encoded]----------------> "+ admin.getPassword() +" [Decoded] ------> "+ commonService.decodeString(admin.getPassword(), "sqr"));
     	System.out.println("Note : Copy the password, decode it in online from decode base64, then remove the added salt [sqr] from the begining, then try to login from browser. ");
     }
     

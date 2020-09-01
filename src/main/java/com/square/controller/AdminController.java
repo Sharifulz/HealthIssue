@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,15 +29,16 @@ public class AdminController {
 		
 		mv.setViewName("admin");
 		mv.addObject("pendingUsers", data.get("pendingUsers"));
+		mv.addObject("approvedUsers", data.get("approvedUsers"));
 		mv.addObject("pendingBlogs", data.get("pendingBlogs"));
 		mv.addObject("approvedPosts", data.get("approvedPosts"));
+		
 		
 		return mv;
 	}
 	
 	@PostMapping("/admin/create")
 	public ModelAndView adminCreate(@ModelAttribute("user") UsersModel admin) {
-		System.out.println("Creating User ------> "+ admin.getUserName());
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> data = new HashMap<>();
 		

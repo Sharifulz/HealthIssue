@@ -116,20 +116,26 @@ body {
 	</div>
 </div>
 
-
-<%-- <div class="container">
-<c:forEach var="posts" items="${data}">
-   <h1>Post Is ${posts.description}</h1>
-   
-   <c:forEach var="comments" items="${posts.commentsList}">
-   		<h3>Comments Is ${comments.comments}</h3>
-   </c:forEach>
-   <br/>
+<c:forEach items="${messages}" var="message">
+	<div class="alert alert-primary" role="alert">
+  		Dear ${currentUser.fullName} , ${message}
+	</div>
 </c:forEach>
-</div> --%>
+
+<c:forEach items="${errorMessage}" var="error">
+	<div class="alert alert-danger" role="alert">
+  		 ${error}
+	</div>
+</c:forEach>
+
+<c:forEach items="${warningMessage}" var="warning">
+	<div class="alert alert-warning" role="alert">
+  		 ${warning}
+	</div>
+</c:forEach>
 
 <div class="container">
-	<c:forEach items="${data}" var="post">
+	<c:forEach items="${approvedPosts}" var="post">
 	<div class="row mb-2">
 		<div class="col-md-3"></div>
 		<div class="col-md-6">
@@ -154,10 +160,6 @@ body {
 	</c:forEach>
 </div>
 
-
-
-		
-		
 
 <!--LOGIN Modal HTML -->
 <div id="myModal" class="modal fade">
@@ -201,11 +203,15 @@ body {
 				<form action="/user/add" method="post">
 					<div class="form-group">
 						<i class="fa fa-user"></i>
-						<input type="text" class="form-control" placeholder="Username" name="userName">
+						<input type="text" class="form-control" placeholder="Username" name="userName" required="required" >
+					</div>
+					<div class="form-group">
+						<i class="fa fa-user"></i>
+						<input type="text" class="form-control" placeholder="Full Name" name="fullName" required="required" >
 					</div>
 					<div class="form-group">
 						<i class="fa fa-lock"></i>
-						<input type="password" class="form-control" placeholder="Password" name="password">					
+						<input type="password" class="form-control" placeholder="Password" name="password" required="required" pattern="{10,12}" required title="10 to 12 characters">					
 					</div>
 					<div class="form-group">
 						<input type="submit" class="btn badge-primary btn-block btn-lg" value="SUBMIT">
